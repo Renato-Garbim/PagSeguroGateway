@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SharedCode.PagSeguro.TransferObjects
+namespace GatewayPagSeguro.DTO
 {
     public class ConsultaTransacaoPagSeguroDTO
     {
@@ -12,6 +12,6 @@ namespace SharedCode.PagSeguro.TransferObjects
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
 
-        public List<ConsultaTransacaoPagSeguroTransactionDTO> listTransaction { get; set;}
+        public List<ConsultaTransacaoPagSeguroTransactionDTO> listTransaction { get; set; }
     }
 }

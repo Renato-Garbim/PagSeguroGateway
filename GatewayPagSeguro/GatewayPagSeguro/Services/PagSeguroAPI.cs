@@ -1,4 +1,5 @@
-﻿using SharedCode.PagSeguro.TransferObjects;
+﻿using GatewayPagSeguro.DTO;
+using SharedCode.PagSeguro;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -8,7 +9,7 @@ using System.Net;
 using System.Text;
 using System.Xml;
 
-namespace SharedCode.PagSeguro
+namespace GatewayPagSeguro.Services
 {
     public class PagSeguroAPI
     {
@@ -16,12 +17,13 @@ namespace SharedCode.PagSeguro
         /// Construtor.
         /// Define SecurityProtocolType.
         /// </summary>
-        public PagSeguroAPI() {
+        public PagSeguroAPI()
+        {
             //Define protocolos de comunicação.
             //Importante para funcionar SSL e TLS.
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12 | SecurityProtocolType.Ssl3;
-        }		
-		
+        }
+
         /// <summary>
         /// Realiza checkout com a conta parametrizada na configuração do sistema.
         /// </summary>
@@ -40,13 +42,13 @@ namespace SharedCode.PagSeguro
             postData.Add("token", token);
             postData.Add("currency", "BRL");
 
-            for (int i=0; i<itens.Count; i++)
+            for (int i = 0; i < itens.Count; i++)
             {
-                postData.Add(string.Concat("itemId", i+1), itens[i].itemId);
-                postData.Add(string.Concat("itemDescription", i+1), itens[i].itemDescription);
-                postData.Add(string.Concat("itemAmount", i+1), itens[i].itemAmount);
-                postData.Add(string.Concat("itemQuantity", i+1), itens[i].itemQuantity);
-                postData.Add(string.Concat("itemWeight", i+1) , itens[i].itemWeight);
+                postData.Add(string.Concat("itemId", i + 1), itens[i].itemId);
+                postData.Add(string.Concat("itemDescription", i + 1), itens[i].itemDescription);
+                postData.Add(string.Concat("itemAmount", i + 1), itens[i].itemAmount);
+                postData.Add(string.Concat("itemQuantity", i + 1), itens[i].itemQuantity);
+                postData.Add(string.Concat("itemWeight", i + 1), itens[i].itemWeight);
             }
 
             //Reference.
@@ -120,7 +122,7 @@ namespace SharedCode.PagSeguro
                 string uri = string.Concat(urlConsultaTransacao, "?email=", emailUsuario, "&token=", token, "&reference=", codigoReferencia);
 
                 //Classe que irá fazer a requisição GET.
-                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(uri);
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
 
                 //Método do webrequest.
                 request.Method = "GET";
@@ -166,7 +168,7 @@ namespace SharedCode.PagSeguro
 
                             //Usado para conversão de data W3C.
                             string formatStringW3CDate = "yyyy-MM-ddTHH:mm:ss.fffzzz";
-                            System.Globalization.CultureInfo cInfoW3CDate = new System.Globalization.CultureInfo("en-US", true);
+                            CultureInfo cInfoW3CDate = new CultureInfo("en-US", true);
 
                             //Popula transações.
                             if (listTransactions != null)
@@ -180,7 +182,7 @@ namespace SharedCode.PagSeguro
                                     {
                                         if (childNode2.Name == "date")
                                         {
-                                            var date = System.DateTime.ParseExact(childNode2.InnerText, formatStringW3CDate, cInfoW3CDate);
+                                            var date = DateTime.ParseExact(childNode2.InnerText, formatStringW3CDate, cInfoW3CDate);
                                             itemTransacao.Date = date;
                                         }
                                         else if (childNode2.Name == "reference")
@@ -231,7 +233,7 @@ namespace SharedCode.PagSeguro
                                         }
                                         else if (childNode2.Name == "lastEventDate")
                                         {
-                                            var lastEventDate = System.DateTime.ParseExact(childNode2.InnerText, formatStringW3CDate, cInfoW3CDate);
+                                            var lastEventDate = DateTime.ParseExact(childNode2.InnerText, formatStringW3CDate, cInfoW3CDate);
                                             itemTransacao.LastEventDate = lastEventDate;
                                         }
                                     }
@@ -327,7 +329,7 @@ namespace SharedCode.PagSeguro
         /// </summary>
         /// <param name="status">Status.</param>
         /// <returns>Nome amigável.</returns>
-        public  string NomeAmigavelStatusPagSeguro(StatusTransacaoEnum status)
+        public string NomeAmigavelStatusPagSeguro(StatusTransacaoEnum status)
         {
             string retorno;
 
