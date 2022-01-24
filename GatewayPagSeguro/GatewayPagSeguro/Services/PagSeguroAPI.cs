@@ -80,6 +80,16 @@ namespace GatewayPagSeguro.Services
                 wc.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
 
                 //Faz o POST e retorna o XML contendo resposta do servidor do pagseguro.
+
+                try
+                {
+                   wc.UploadValues(urlCheckout, postData);
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+
                 var result = wc.UploadValues(urlCheckout, postData);
 
                 //Obtém string do XML.

@@ -40,17 +40,19 @@ namespace GatewayPagSeguro.Controllers
             return novalista;
         }
 
-        public IActionResult EnviarDados()
+        public IActionResult EnviarDados(ProdutosViewModel model)
         {
             var list = new List<PagSeguroItemDTO>();
-            var comprador = new PagSeguroCompradorDTO();
-
-             var token = "850fc82c-a5d8-4dfe-87a5-3ca590387ef4de918bdb4707a666783cf1179af87d2c3fba-7ae5-4c36-8717-edaa7724576f";
+            list = MockProdutos();
+          
+             var token = "3167402208B94278A333A53C42F12D0B";
              var email = "renatobordinigarbim@hotmail.com";
              var url = "https://ws.sandbox.pagseguro.uol.com.br/v2/transactions?";
+            model.Comprador.SenderAreaCode = "002";
+
 
             var servicePagSeguro = new PagSeguroAPI();
-            var result = servicePagSeguro.Checkout(email, token, url, list, comprador, "");
+            var result = servicePagSeguro.Checkout(email, token, url, list, model.Comprador, "");
 
             return View();
         }
