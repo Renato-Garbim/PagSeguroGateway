@@ -1,7 +1,96 @@
-﻿@{
+﻿@model GatewayPagSeguro.Models.ProdutosViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Bem-Vindo</h1>
+    <h1 class="display-4"></h1>
 </div>
+
+<form asp-controller="Home" asp-action="EnviarDados" asp-antiforgery="true" id="Form-Fechar-Pedido">
+
+    <div class="row">
+
+
+        @foreach (var produto in Model.ListaProdutos)
+        {
+            <div class="col-md-4 mb-4">
+
+                <div class="card shadow-lg">
+
+                    <span class="badge rounded-pill bg-light text-dark w-30 mt-n2 mx-auto">@produto.itemId</span>
+                    <div class="card-header text-center pt-4 pb-3">
+                        <h1 class="font-weight-bold mt-2">
+                            <small class="text-lg mb-auto">$</small>@produto.itemAmount<small class="text-lg">/mo</small>
+                        </h1>
+                    </div>
+
+                    <div class="card-body text-lg-start text-center pt-0">
+
+                        <div class="d-flex justify-content-lg-start justify-content-center p-2">
+                            <span class="ps-3">@produto.itemDescription</span>
+                        </div>
+
+                        <a href="javascript:;" class="btn btn-icon bg-gradient-dark d-lg-block mt-3 mb-0">
+                            Join
+                            <i class="fas fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        }
+
+    </div>
+
+
+
+
+    <div class="row">
+
+        <div class="col">
+            <div class="input-group input-group-outline my-3">
+
+                <label class="form-label" asp-for="Comprador.SenderName"></label>
+
+                <input asp-for="Comprador.SenderName" class="form-control" />
+                <span class="text-danger" asp-validation-for="Comprador.SenderName"></span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="input-group input-group-outline my-3">
+                <label class="form-label" asp-for="Comprador.senderEmail"></label>
+
+                <input asp-for="Comprador.senderEmail" class="form-control" />
+                <span class="text-danger" asp-validation-for="Comprador.senderEmail"></span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="input-group input-group-outline my-3">
+
+                <label class="form-label" asp-for="Comprador.senderPhone"></label>
+
+                <input asp-for="Comprador.senderPhone" class="form-control" />
+                <span class="text-danger" asp-validation-for="Comprador.senderPhone"></span>
+            </div>
+        </div>
+    </div>
+
+
+    <button class="btn btn-success">
+        Enviar Requisição
+    </button>
+
+
+</form>
+
+
