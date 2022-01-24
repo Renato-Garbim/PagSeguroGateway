@@ -21,7 +21,7 @@ namespace GatewayPagSeguro.Services
         {
             //Define protocolos de comunicação.
             //Importante para funcionar SSL e TLS.
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12 | SecurityProtocolType.Ssl3;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
         }
 
         /// <summary>
