@@ -78,6 +78,7 @@ namespace GatewayPagSeguro.Services
             {
                 //Informa header sobre URL.
                 wc.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
+                //wc.Headers[HttpRequestHeader.ContentType] = "application / json";
 
                 //Faz o POST e retorna o XML contendo resposta do servidor do pagseguro.
 
