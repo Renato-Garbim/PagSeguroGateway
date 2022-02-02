@@ -52,6 +52,11 @@ namespace GatewayPagSeguro.Controllers
             var comprador = ConverterParaCompradorPagSeguro(model.Comprador);
 
             var servicePagSeguro = new PagSeguroMyService();
+            var serviceGnerate = new GeradorService();
+
+            var teste = serviceGnerate.GerarXML(produto);
+
+
             var json = servicePagSeguro.MontarJson(produto, comprador);
                        
             var urlCheckout = MontarURL();
@@ -84,7 +89,6 @@ namespace GatewayPagSeguro.Controllers
         private Item ConverterParaProdutosPagSeguro(List<PagSeguroItemDTO> produtos)
         {
 
-            //var lista = new List<Item>();            
             var objeto = new Item()
             {
                 Id = produtos.FirstOrDefault().itemId,
@@ -93,16 +97,6 @@ namespace GatewayPagSeguro.Controllers
                 Quantity = produtos.FirstOrDefault().itemQuantity,
                 Weight = produtos.FirstOrDefault().itemWeight
             };
-
-            //produtos.ForEach(x => 
-            //    lista.Add(new Item() {
-            //        Id = x.itemId,
-            //        Amount = x.itemAmount,
-            //        Description = x.itemDescription,
-            //        Quantity = x.itemQuantity,
-            //        Weight = x.itemWeight
-            //    }));;
-
 
             return objeto;
         }
